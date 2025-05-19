@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Диагнос</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
+    .background-container {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+
+    .background-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .btn-wrapper {
+      position: absolute;
+      top: 627px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    .btn-diagnose {
+      padding: 14px 32px;
+      font-size: 16px;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      min-width: 240px;
+      max-width: 300px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    select,
+    input,
+    textarea,
+    button.next-btn {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .next-btn {
+      background-color: #111;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .next-btn:hover {
+      background-color: #333;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="background-container">
+  <img src="static/svg/background.svg" alt="Background">
+  <div class="btn-wrapper">
+    <button class="btn-diagnose" id="openBtn">ПРОВЕРИТЬ ДИАГНОЗ</button>
+  </div>
+</div>
+
+<div class="modal" id="diagnoseModal">
+  <div class="modal-content">
+    <div class="step step-1 active">
+      <h2>🧠 Начнём с простых вопросов</h2>
+      <p>Мы не храним документы и не передаём их третьим лицам. Все данные используются только для анализа. 🔐 Шифрование и конфиденциальность гарантированы.</p>
+      <button class="next-btn" onclick="goToStep(2)">Начать опрос</button>
+    </div>
+
+    <div class="step step-2">
+      <h2>Общие данные</h2>
+      <label>Пол:</label><select id="gender"><option>Мужчина</option><option>Женщина</option></select>
+      <label>Возраст:</label><input type="number">
+      <label>Рост:</label><input type="number">
+      <label>Вес:</label><input type="number">
+      <label>Страна:</label><input type="text">
+      <label>Беременность / Лактация:</label><select><option>Нет</option><option>Беременность</option><option>Лактация</option></select>
+      <button class="next-btn" onclick="goToStep(3)">Далее</button>
+    </div>
+
+    <div class="step step-3">
+      <h2>Симптоматика и диагноз</h2>
+      <label>Проблема:</label><input type="text">
+      <label>Диагноз (МКБ):</label><input type="text">
+      <label>Уточнение:</label><input type="text">
+      <label>Дата первого визита:</label><input type="date">
+      <label>Что беспокоит:</label><textarea></textarea>
+      <button class="next-btn" onclick="goToStep(4)">Далее</button>
+    </div>
+
+    <div class="step step-4">
+      <h2>Лечение</h2>
+      <label>Принимаете ли лекарства?</label><input type="text">
+      <label>Терапия:</label><input type="text">
+      <label>Дата:</label><input type="date">
+      <label>Описание:</label><textarea></textarea>
+      <button class="next-btn" onclick="goToStep(5)">Далее</button>
+    </div>
+
+    <div class="step step-5">
+      <h2>Анализы и документы</h2>
+      <input type="file" multiple>
+      <textarea placeholder="Описание документов"></textarea>
+      <button class="next-btn" onclick="goToStep(6)">Далее</button>
+    </div>
+
+    <div class="step step-6">
+      <h2>Готово</h2>
+      <p>🎯 Мы собрали всю необходимую информацию. ИИ начнёт анализ — это займет 30–60 секунд.</p>
+      <button class="next-btn" onclick="closeModal()">Анализ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("diagnoseModal");
+  const openBtn = document.getElementById("openBtn");
+
+  openBtn.onclick = () => modal.style.display = "block";
+  window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
+
+  function goToStep(step) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.querySelector('.step-' + step).classList.add('active');
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+</script>
+
+</body>
+</html>
