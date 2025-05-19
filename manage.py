@@ -5,6 +5,11 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 
+
+import openai
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ai_diagnos.settings')
