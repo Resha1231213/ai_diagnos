@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -140,7 +139,7 @@
       <label>Диагноз (МКБ):</label><input type="text">
       <label>Уточнение:</label><input type="text">
       <label>Дата первого визита:</label><input type="date">
-      <label>Что беспокоит:</label><textarea></textarea>
+      <label>Что беспокоит:</label><textarea id="inputText"></textarea> <!-- ID добавлен сюда -->
       <button class="next-btn" onclick="goToStep(4)">Далее</button>
     </div>
 
@@ -159,7 +158,6 @@
       <textarea placeholder="Описание документов"></textarea>
       <button class="next-btn" onclick="goToStep(6)">Далее</button>
     </div>
-
     <div class="step step-6">
       <h2>Готово</h2>
       <p>🎯 Мы собрали всю необходимую информацию. ИИ начнёт анализ — это займет 30–60 секунд.</p>
@@ -185,7 +183,7 @@
   }
 
   function sendData() {
-    const text = document.getElementById("inputText").value;  // замените на свой id поля ввода
+    const text = document.getElementById("inputText").value;
     fetch("/analyze/", {
         method: "POST",
         headers: {
@@ -195,7 +193,7 @@
     })
     .then(response => response.json())
     .then(data => {
-        alert("Ответ ИИ: " + data.result);  // или вставь в модалку
+        alert("Ответ ИИ: " + data.result);
     })
     .catch(error => {
         alert("Ошибка при анализе: " + error);
