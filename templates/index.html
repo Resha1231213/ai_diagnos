@@ -183,6 +183,24 @@
   function closeModal() {
     modal.style.display = "none";
   }
+
+  function sendData() {
+    const text = document.getElementById("inputText").value;  // замените на свой id поля ввода
+    fetch("/analyze/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert("Ответ ИИ: " + data.result);  // или вставь в модалку
+    })
+    .catch(error => {
+        alert("Ошибка при анализе: " + error);
+    });
+}
 </script>
 
 </body>
